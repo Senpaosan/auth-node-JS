@@ -1,0 +1,90 @@
+<nav class="navbar bg-warning-subtle fixed-top">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end bg-danger-subtle" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#my-posts">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#other-posts">Other Post</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </nav><br>
+<div class="container mt-5">
+    <h1 class="mt-4">Dashboard</h1>
+    <p>Welcome <%= user %></p>
+    <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    <a href="/users/newpost" class="btn btn-dark">New Post</a>
+    
+    <!-- Tab Navigation - Bootstrap 5 -->
+    <ul class="nav nav-tabs mt-4" id="postsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="my-posts-tab" data-bs-toggle="tab" 
+                    data-bs-target="#my-posts" type="button" role="tab" 
+                    aria-controls="my-posts" aria-selected="true">
+                My Posts
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="other-posts-tab" data-bs-toggle="tab" 
+                    data-bs-target="#other-posts" type="button" role="tab" 
+                    aria-controls="other-posts" aria-selected="false">
+                Other Posts
+            </button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="postsTabContent">
+        <!-- My Posts Tab -->
+        <div class="tab-pane fade show active" id="my-posts" role="tabpanel" 
+             aria-labelledby="my-posts-tab">
+            <% if (myPostings && myPostings.length > 0) { %>
+                <% myPostings.forEach(post => { %>
+                <div class="card my-4">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= post.title %></h4>
+                        <div class="card-subtitle text-muted"><%= post.createdAt.toLocaleDateString() %></div>
+                        <div class="card-subtitle text-muted">By: <%= post.author %></div>
+                        <div class="card-text"><%= post.description %></div>
+                        <a href="/users/delete/<%= post.id %>" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+                <% }) %>
+            <% } else { %>
+                <p class="mt-3">You haven't created any posts yet.</p>
+            <% } %>
+        </div>
+
+        <!-- Other Posts Tab -->
+        <div class="tab-pane fade" id="other-posts" role="tabpanel" 
+             aria-labelledby="other-posts-tab">
+            <% if (otherPostings && otherPostings.length > 0) { %>
+                <% otherPostings.forEach(post => { %>
+                <div class="card my-4">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= post.title %></h4>
+                        <div class="card-subtitle text-muted"><%= post.createdAt.toLocaleDateString() %></div>
+                        <div class="card-subtitle text-muted">By: <%= post.author %></div>
+                        <div class="card-text"><%= post.description %></div>
+                    </div>
+                </div>
+                <% }) %>
+            <% } else { %>
+                <p class="mt-3">No posts from other users.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
